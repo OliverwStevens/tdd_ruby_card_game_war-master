@@ -7,7 +7,7 @@
   end
 
   def has_cards?
-    @hand.any?
+    hand.any?
   end
   
  end

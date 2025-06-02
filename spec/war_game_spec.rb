@@ -21,12 +21,33 @@ describe 'WarGame' do
     game = WarGame.new
     game.start
     #override the hands
-    game.player1.hand = [PlayingCard.new("H", "A"), PlayingCard.new("H", "2"), PlayingCard.new("H", "A"), PlayingCard.new("H", "A")]
-    game.player2.hand = [PlayingCard.new("H", "2"), PlayingCard.new("H", "A"), PlayingCard.new("H", "A"), PlayingCard.new("H", "2")]
+    game.player1.hand = [PlayingCard.new("Hearts", "A"), PlayingCard.new("Hearts", "2"), PlayingCard.new("Hearts", "A"), PlayingCard.new("Hearts", "A")]
+    game.player2.hand = [PlayingCard.new("Hearts", "2"), PlayingCard.new("Hearts", "A"), PlayingCard.new("Hearts", "A"), PlayingCard.new("Hearts", "2")]
 
 
     game.play_round(nil)
     expect(game.player1.hand.count).to eql(5)
     expect(game.player2.hand.count).to eql(3)
+
+    game.play_round(nil)
+
+    expect(game.player1.hand.count).to eql(4)
+    expect(game.player2.hand.count).to eql(4)
+    game.play_round(nil)
+  end
+
+  it "checks to see if there is a winner" do
+    game = WarGame.new
+    game.start
+    #override the hands
+    game.player1.hand = [PlayingCard.new("Hearts", "A")]
+    game.player2.hand = [PlayingCard.new("Hearts", "2")]
+    
+    expect(game.check_winner).to eql(nil)
+
+    game.play_round(nil)
+
+    expect(game.check_winner).to eql(game.player1)
+
   end
 end

@@ -10,18 +10,18 @@ class CardDeck
     end
   end
   def cards_left
-    @cards.count ||= 52
+    cards.count ||= 52
   end
 
   def deal
-    @cards.pop
+    cards.pop
   end
 
   def shuffle!
-    @cards.shuffle!
+    cards.shuffle!
   end
 
   def has_cards?
-    @cards.any?
+    cards.any?
   end
 end
