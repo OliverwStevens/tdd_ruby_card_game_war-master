@@ -7,9 +7,13 @@
     @player2 = WarPlayer.new
     @deck = CardDeck.new
 
-    #while @deck.has_cards? do
-     
-    #end
+    @deck.shuffle
+
+    while @deck.has_cards? do
+     @player1.hand.push(@deck.deal)
+     @player2.hand.push(@deck.deal)
+
+    end
    end
 
    

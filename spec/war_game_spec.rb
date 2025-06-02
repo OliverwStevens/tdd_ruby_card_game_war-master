@@ -12,6 +12,8 @@ describe 'WarGame' do
 
   it "deals the deck to the players" do
     game = WarGame.new
-    
+    expect(game.player1.hand.count).to eql(26)
+    expect(game.player2.hand.count).to eql(26)
+
   end
 end
