@@ -15,7 +15,6 @@ class CardDeck
   end
 
   def deal
-    cards_left
     @cards.pop
   end
 end
