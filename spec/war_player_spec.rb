@@ -8,4 +8,12 @@ describe 'WarPlayer' do
     expect(player.name).to eql(name)
     expect(player.hand).to be_empty
   end
+  it 'tells me if the player has cards' do
+    player = WarPlayer.new("John")
+    expect(player.has_cards?).to eq(false)
+
+
+  end
+
+  
 end

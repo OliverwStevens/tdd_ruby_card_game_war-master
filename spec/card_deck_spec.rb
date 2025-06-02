@@ -20,7 +20,7 @@ describe 'CardDeck' do
 
   it 'Should shuffle the deck' do
     deck = CardDeck.new
-    deck.shuffle
+    deck.shuffle!
     expect(deck.cards).to_not contain_exactly(deck.cards)
   end
 
