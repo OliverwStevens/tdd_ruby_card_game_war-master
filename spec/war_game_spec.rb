@@ -16,4 +16,9 @@ describe 'WarGame' do
     expect(game.player2.hand.count).to eql(26)
 
   end
+
+  it "starts the game" do
+    game = WarGame.new
+    game.start
+  end
 end
