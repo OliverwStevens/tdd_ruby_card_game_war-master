@@ -24,5 +24,15 @@ describe 'CardDeck' do
     expect(deck.cards).to_not contain_exactly(deck.cards)
   end
 
+  it 'checks to see if the deck has any cards' do
+    deck = CardDeck.new
+    expect(deck.has_cards?).to eql(true)
+
+    deck.cards = []
+
+    expect(deck.has_cards?).to eql(false)
+
+  end
+
 
 end

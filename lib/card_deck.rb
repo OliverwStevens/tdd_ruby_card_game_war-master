@@ -1,12 +1,13 @@
 class CardDeck
-  attr_reader :cards_left, :cards
+  attr_reader :cards_left
+  attr_accessor :cards
 
   def initialize
     @cards = []
     
     for suit in PlayingCard::SUIT do
-      13.times do
-        @cards.push(PlayingCard.new(suit, "A"))
+      for rank in PlayingCard::RANK do
+        @cards.push(PlayingCard.new(suit, rank))
       end
     end
   end
@@ -20,5 +21,13 @@ class CardDeck
 
   def shuffle
     @cards.shuffle
+  end
+
+  def has_cards?
+    if @cards.count > 0
+      true
+    else
+      false
+    end
   end
 end
