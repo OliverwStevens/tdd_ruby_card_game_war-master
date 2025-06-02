@@ -1,11 +1,21 @@
 class CardDeck
-  attr_reader :cards_left
+  attr_reader :cards_left, :cards
+
+  def initialize
+    @cards = []
+    
+    for suit in PlayingCard::SUIT do
+      13.times do
+        @cards.push(PlayingCard.new(suit, "A"))
+      end
+    end
+  end
   def cards_left
-    @cards_left ||= 52
+    @cards.count ||= 52
   end
 
   def deal
     cards_left
-    @cards_left -= 1
+    @cards.pop
   end
 end

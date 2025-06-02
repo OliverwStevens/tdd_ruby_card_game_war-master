@@ -12,4 +12,11 @@ describe 'CardDeck' do
     expect(card).to_not be_nil
     expect(deck.cards_left).to eq 51
   end
+
+  it "should contain playing card objects" do
+    deck = CardDeck.new
+    expect(deck.cards[0]).to be_a(PlayingCard)
+  end
+
+
 end
