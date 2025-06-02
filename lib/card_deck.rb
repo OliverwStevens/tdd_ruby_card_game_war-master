@@ -17,4 +17,8 @@ class CardDeck
   def deal
     @cards.pop
   end
+
+  def shuffle
+    @cards.shuffle
+  end
 end

@@ -18,5 +18,11 @@ describe 'CardDeck' do
     expect(deck.cards[0]).to be_a(PlayingCard)
   end
 
+  it 'Should shuffle the deck' do
+    deck = CardDeck.new
+    deck.shuffle
+    expect(deck.cards).to_not contain_exactly(deck.cards)
+  end
+
 
 end
