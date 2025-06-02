@@ -15,5 +15,12 @@ describe 'WarPlayer' do
 
   end
 
+  it 'adds cards to the beginning of the deck' do
+    player = WarPlayer.new("John")
+    player.hand = [PlayingCard.new("Hearts", "A"), PlayingCard.new("Hearts", "2"), PlayingCard.new("Hearts", "A"), PlayingCard.new("Hearts", "A")]
+    player.add_cards_to_bottom([PlayingCard.new("Spades", "K"), PlayingCard.new("Spades", "5")])
+    expect(player.hand[0].suit).to eql("Spades")
+  end
+
   
 end

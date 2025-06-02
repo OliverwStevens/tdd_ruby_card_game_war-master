@@ -3,6 +3,6 @@ require_relative 'war_game'
 game = WarGame.new
 game.start
 until game.winner do
-  puts game.play_round
+  game.play_round(nil)
 end
 puts "Winner: #{game.winner.name}"

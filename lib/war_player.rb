@@ -10,4 +10,9 @@
     hand.any?
   end
   
+  def add_cards_to_bottom(cards)
+    cards.each do |card|
+      hand.unshift(card)
+    end
+  end
  end

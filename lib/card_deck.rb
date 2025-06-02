@@ -1,3 +1,4 @@
+require_relative "playing_card"
 class CardDeck
   attr_reader :cards_left
   attr_accessor :cards

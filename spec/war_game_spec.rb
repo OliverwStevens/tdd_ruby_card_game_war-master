@@ -31,8 +31,8 @@ describe 'WarGame' do
 
     game.play_round(nil)
 
-    expect(game.player1.hand.count).to eql(4)
-    expect(game.player2.hand.count).to eql(4)
+    expect(game.player1.hand.count).to eql(3)
+    expect(game.player2.hand.count).to eql(5)
     game.play_round(nil)
   end
 
