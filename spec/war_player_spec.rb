@@ -14,6 +14,11 @@ describe 'WarPlayer' do
     expect(player.has_cards?).to eq(false)
   end
 
+  it 'returns the card count' do
+    player = WarPlayer.new('John')
+    expect(player.card_count).to eq(0)
+  end
+
   it 'adds cards to the beginning of the deck' do
     player = WarPlayer.new('John')
     player.hand = [PlayingCard.new('♥', 'A'), PlayingCard.new('♥', '2'), PlayingCard.new('♥', 'A'),

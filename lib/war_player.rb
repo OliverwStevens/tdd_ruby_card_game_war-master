@@ -20,4 +20,8 @@ class WarPlayer
   def play_card
     hand.pop
   end
+
+  def card_count
+    hand.count
+  end
 end

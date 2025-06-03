@@ -11,3 +11,6 @@
 
 Metrics/MethodLength:
   Max: 7
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never

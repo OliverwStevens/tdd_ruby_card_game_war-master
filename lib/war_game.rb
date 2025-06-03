@@ -16,10 +16,6 @@ class WarGame
       player1.hand.push(deck.deal)
       player2.hand.push(deck.deal)
     end
-
-    # Shrink hands
-    # player1.hand = [PlayingCard.new("♥", "A"), PlayingCard.new("♥", "2"), PlayingCard.new("♥", "A"), PlayingCard.new("♥", "A")]
-    # player2.hand = [PlayingCard.new("♥", "2"), PlayingCard.new("♥", "A"), PlayingCard.new("♥", "A"), PlayingCard.new("♥", "2")]
   end
 
   def play_round(cards = [])
@@ -28,8 +24,7 @@ class WarGame
     if player1.has_cards? && player2.has_cards?
       calculate_round(cards, player1_card, player2_card)
     else
-      p 'no cards'
-      # handle no cards
+      puts "#{!player1.has_cards? ? player1.name : player2.name} has run out of cards"
     end
   end
 
