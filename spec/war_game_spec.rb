@@ -43,11 +43,11 @@ describe 'WarGame' do
     game.player1.hand = [PlayingCard.new("Hearts", "A")]
     game.player2.hand = [PlayingCard.new("Hearts", "2")]
     
-    expect(game.check_winner).to eql(nil)
+    expect(game.winner).to eql(nil)
 
     game.play_round(nil)
 
-    expect(game.check_winner).to eql(game.player1)
+    expect(game.winner).to eql(game.player1)
 
   end
 end
