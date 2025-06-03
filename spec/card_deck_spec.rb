@@ -13,7 +13,7 @@ describe 'CardDeck' do
     expect(deck.cards_left).to eq 51
   end
 
-  it "should contain playing card objects" do
+  it 'should contain playing card objects' do
     deck = CardDeck.new
     expect(deck.cards[0]).to be_a(PlayingCard)
   end
@@ -31,8 +31,5 @@ describe 'CardDeck' do
     deck.cards = []
 
     expect(deck.has_cards?).to eql(false)
-
   end
-
-
 end
