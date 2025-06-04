@@ -37,14 +37,11 @@ class WarSocketServer
     client.puts('Welcome to the War!')
     players.push(WarPlayer.new(player_name))
     clients.push(client)
-
-    # associate player and client
   rescue IO::WaitReadable, Errno::EINTR
     # puts 'No client to accept'
   end
 
   def create_game_if_possible
-    # puts players.count
     return unless players.count == 2
 
     game = setup_game
@@ -57,8 +54,6 @@ class WarSocketServer
 
   def next_round(game)
     listen_for_client_responses
-    # binding.irb
-
     return unless self.responses.count == 2 # rubocop:disable Style/RedundantSelf
 
     game.play_round
@@ -96,8 +91,6 @@ class WarSocketServer
 
   def output_response(game)
     response = game.result
-    # p "server #{response} rounds #{game.rounds}"
-    # binding.irb
     return unless response
 
     clients.each do |client|
