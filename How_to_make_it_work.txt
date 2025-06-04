@@ -1,0 +1,7 @@
+require 'socket'
+
+socket =  TCPSocket.new('localhost', 3336)
+
+use irb in the terminal and the above lines
+
+Also use socket.gets and socket.puts
