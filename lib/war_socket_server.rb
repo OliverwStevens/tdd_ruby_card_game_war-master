@@ -2,7 +2,10 @@ require 'socket'
 require_relative 'war_player'
 require_relative 'card_deck'
 require_relative 'war_game'
+
 class WarSocketServer
+  attr_accessor :server, :responses
+
   def initialize
     @responses = []
   end
@@ -28,7 +31,7 @@ class WarSocketServer
   end
 
   def accept_new_client(player_name = 'Random Player')
-    client = @server.accept_nonblock
+    client = server.accept_nonblock
     puts 'Client accepted'
 
     client.puts('Welcome to the War!')
@@ -44,9 +47,7 @@ class WarSocketServer
     # puts players.count
     return unless players.count == 2
 
-    game = WarGame.new(CardDeck.new, players.first, players.last)
-    games.push(game)
-    game.start
+    game = setup_game
 
     clients.each do |client|
       client.puts('Game is starting...')
@@ -55,20 +56,12 @@ class WarSocketServer
   end
 
   def next_round(game)
-    # responses = []
-    clients.each do |client|
-      sleep(0.1)
-      begin
-        @responses << client.read_nonblock(1000)
-      rescue IO::WaitReadable
-      end
-    end
+    listen_for_client_responses
     # binding.irb
 
-    return unless @responses.count == 2
+    return unless self.responses.count == 2 # rubocop:disable Style/RedundantSelf
 
     game.play_round
-    p "rounds #{game.rounds} responses #{@responses.count}"
 
     response = game.result
     # p "server #{response} rounds #{game.rounds}"
@@ -76,10 +69,9 @@ class WarSocketServer
     return unless response
 
     clients.each do |client|
-      # client.puts 'Hiaoiwf'
       client.puts response
     end
-    @responses = []
+    self.responses = []
   end
 
   def run_game(game)
@@ -89,6 +81,25 @@ class WarSocketServer
   end
 
   def stop
-    @server.close if @server
+    server&.close
+  end
+
+  private
+
+  def setup_game
+    game = WarGame.new(CardDeck.new, players.first, players.last)
+    games.push(game)
+    game.start
+    game
+  end
+
+  def listen_for_client_responses
+    clients.each do |client|
+      sleep(0.1)
+      begin
+        self.responses << client.read_nonblock(1000) # rubocop:disable Style/RedundantSelf
+      rescue IO::WaitReadable
+      end
+    end
   end
 end
