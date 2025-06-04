@@ -63,21 +63,11 @@ class WarSocketServer
 
     game.play_round
 
-    response = game.result
-    # p "server #{response} rounds #{game.rounds}"
-    # binding.irb
-    return unless response
-
-    clients.each do |client|
-      client.puts response
-    end
-    self.responses = []
+    output_response(game)
   end
 
   def run_game(game)
-    loop do
-      next_round(game)
-    end
+    next_round(game) until game.winner
   end
 
   def stop
@@ -101,5 +91,17 @@ class WarSocketServer
       rescue IO::WaitReadable
       end
     end
+  end
+
+  def output_response(game)
+    response = game.result
+    # p "server #{response} rounds #{game.rounds}"
+    # binding.irb
+    return unless response
+
+    clients.each do |client|
+      client.puts response
+    end
+    self.responses = []
   end
 end
