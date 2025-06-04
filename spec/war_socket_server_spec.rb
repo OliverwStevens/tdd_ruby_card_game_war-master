@@ -67,7 +67,7 @@ describe WarSocketServer do
 
     @server.create_game_if_possible
 
-    @server.run_game(@server.games.first)
+    @server.next_round(@server.games.first)
 
     expect(client1.capture_output).to match(/of/i)
     expect(client2.capture_output).to match(/of/i)
@@ -88,7 +88,7 @@ describe WarSocketServer do
 
     @server.create_game_if_possible
 
-    @server.run_game(@server.games.first)
+    @server.next_round(@server.games.first)
 
     # handles ties
     expect(@server.games.first.rounds).to eql(0)
@@ -107,7 +107,7 @@ describe WarSocketServer do
 
     @server.create_game_if_possible
 
-    @server.run_game(@server.games.first)
+    @server.next_round(@server.games.first)
 
     expect(client1.capture_output).to match(/of/i)
     expect(client2.capture_output).to match(/of/i)
@@ -118,7 +118,7 @@ describe WarSocketServer do
     client1.provide_input('Ready!')
     client2.provide_input('Ready!')
 
-    @server.run_game(@server.games.first)
+    @server.next_round(@server.games.first)
 
     expect(client1.capture_output).to match(/of/i)
     expect(client2.capture_output).to match(/of/i)
