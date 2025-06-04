@@ -68,6 +68,7 @@ class WarSocketServer
 
   def run_game(game)
     next_round(game) until game.winner
+    puts "Winner: #{game.winner.name}"
   end
 
   def stop

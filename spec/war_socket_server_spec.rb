@@ -2,6 +2,9 @@ require_relative '../lib/war_socket_server'
 require_relative '../lib/mock_war_socket_client'
 
 describe WarSocketServer do
+  let(:client1) { MockWarSocketClient.new(@server.port_number) }
+  let(:client2) { MockWarSocketClient.new(@server.port_number) }
+
   before(:each) do
     @clients = []
     @server = WarSocketServer.new
@@ -22,50 +25,33 @@ describe WarSocketServer do
   end
 
   it 'accepts new clients and starts a game if possible' do
-    client1 = MockWarSocketClient.new(@server.port_number)
-    @clients.push(client1)
-    @server.accept_new_client('Player 1')
-    @server.create_game_if_possible
+    integrate_client(client1, 'Player 1')
+
     expect(@server.games.count).to be 0
-    client2 = MockWarSocketClient.new(@server.port_number)
-    @clients.push(client2)
-    @server.accept_new_client('Player 2')
-    @server.create_game_if_possible
+
+    integrate_client(client2, 'Player 2')
+
     expect(@server.games.count).to be 1
   end
 
   it 'sends a welcome message' do
-    client1 = MockWarSocketClient.new(@server.port_number)
     @clients.push(client1)
     @server.accept_new_client('Player 1')
+
     expect(client1.capture_output).to match(/welcome/i)
   end
 
   it 'sends a message to both clients when there are two clients' do
-    client1 = MockWarSocketClient.new(@server.port_number)
-    @clients.push(client1)
-    @server.accept_new_client('Player 1')
-    client2 = MockWarSocketClient.new(@server.port_number)
-    @clients.push(client2)
-    @server.accept_new_client('Player 2')
-    @server.create_game_if_possible
+    integrate_client(client1, 'Player 1')
+
+    integrate_client(client2, 'Player 2')
 
     expect(client1.capture_output).to match(/starting/i)
     expect(client2.capture_output).to match(/starting/i)
   end
 
   it 'waits for input from both users before moving onto the next round' do
-    client1 = MockWarSocketClient.new(@server.port_number)
-    @clients.push(client1)
-    @server.accept_new_client('Player 1')
-    client2 = MockWarSocketClient.new(@server.port_number)
-    @clients.push(client2)
-    @server.accept_new_client('Player 2')
-
-    client1.provide_input('Ready!')
-    client2.provide_input('Ready!')
-
-    @server.create_game_if_possible
+    both_clients_integrate_and_input
 
     @server.next_round(@server.games.first)
 
@@ -77,12 +63,9 @@ describe WarSocketServer do
   end
 
   it 'should not play game without both players' do
-    client1 = MockWarSocketClient.new(@server.port_number)
-    @clients.push(client1)
-    @server.accept_new_client('Player 1')
-    client2 = MockWarSocketClient.new(@server.port_number)
-    @clients.push(client2)
-    @server.accept_new_client('Player 2')
+    integrate_client(client1, 'Player 1')
+
+    integrate_client(client2, 'Player 2')
 
     client1.provide_input('Ready!')
 
@@ -95,22 +78,9 @@ describe WarSocketServer do
   end
 
   it 'plays multiple rounds' do
-    client1 = MockWarSocketClient.new(@server.port_number)
-    @clients.push(client1)
-    @server.accept_new_client('Player 1')
-    client2 = MockWarSocketClient.new(@server.port_number)
-    @clients.push(client2)
-    @server.accept_new_client('Player 2')
+    both_clients_integrate_and_input
 
-    client1.provide_input('Ready!')
-    client2.provide_input('Ready!')
-
-    @server.create_game_if_possible
-
-    @server.next_round(@server.games.first)
-
-    expect(client1.capture_output).to match(/of/i)
-    expect(client2.capture_output).to match(/of/i)
+    do_next_round
 
     # handles ties
     expect(@server.games.first.rounds).to_not eql(0)
@@ -118,10 +88,7 @@ describe WarSocketServer do
     client1.provide_input('Ready!')
     client2.provide_input('Ready!')
 
-    @server.next_round(@server.games.first)
-
-    expect(client1.capture_output).to match(/of/i)
-    expect(client2.capture_output).to match(/of/i)
+    do_next_round
 
     # handles ties
     expect(@server.games.first.rounds).to_not eql(1)
@@ -132,4 +99,28 @@ describe WarSocketServer do
   #   make sure the mock client gets appropriate output
   #   make sure the next round isn't played until both clients say they are ready to play
   #   ...
+end
+
+private
+
+def integrate_client(client, name)
+  @clients.push(client)
+  @server.accept_new_client(name)
+  @server.create_game_if_possible
+end
+
+def both_clients_integrate_and_input(input = 'Ready!')
+  integrate_client(client1, 'Player 1')
+
+  integrate_client(client2, 'Player 2')
+
+  client1.provide_input(input)
+  client2.provide_input(input)
+end
+
+def do_next_round
+  @server.next_round(@server.games.first)
+
+  expect(client1.capture_output).to match(/of/i)
+  expect(client2.capture_output).to match(/of/i)
 end
