@@ -2,11 +2,14 @@ require_relative 'war_player'
 require_relative 'card_deck'
 class WarGame
   attr_reader :player1, :player2, :deck
+  attr_accessor :rounds, :result
 
-  def initialize(deck = CardDeck.new)
-    @player1 = WarPlayer.new('Player1')
-    @player2 = WarPlayer.new('Player2')
+  def initialize(deck = CardDeck.new, player1 = WarPlayer.new('Player1'), player2 = WarPlayer.new('Player2'))
+    @player1 = player1
+    @player2 = player2
     @deck = deck
+    @rounds = 0
+    @result = ''
   end
 
   def start
@@ -24,7 +27,7 @@ class WarGame
     if player1.has_cards? && player2.has_cards?
       calculate_round(cards, player1_card, player2_card)
     else
-      puts "#{!player1.has_cards? ? player1.name : player2.name} has run out of cards"
+      self.result = "#{!player1.has_cards? ? player1.name : player2.name} has run out of cards"
     end
   end
 
@@ -41,6 +44,7 @@ class WarGame
     player2_card = player2.play_card
     cards.push(player1_card, player2_card).shuffle!
 
+    self.rounds += 1
     [player1_card, player2_card]
   end
 
@@ -59,9 +63,9 @@ class WarGame
 
   def message(player, card_1, card_2)
     if player.nil?
-      puts "Hot diggity dog! It's a tie between #{card_1.rank} of #{card_1.suit} and a #{card_2.rank} of #{card_2.suit}"
+      self.result = "Hot diggity dog! It's a tie between #{card_1.rank} of #{card_1.suit} and a #{card_2.rank} of #{card_2.suit}"
     else
-      puts "#{player.name}'s wins the round with a #{card_1.value} of #{card_1.suit} vs a #{card_2.rank} of #{card_2.suit}"
+      self.result = "#{player.name}'s wins the round with a #{card_1.value} of #{card_1.suit} vs a #{card_2.rank} of #{card_2.suit}"
 
     end
   end
