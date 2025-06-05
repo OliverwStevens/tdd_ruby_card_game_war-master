@@ -69,6 +69,9 @@ class WarSocketServer
   def run_game(game)
     next_round(game) until game.winner
     puts "Winner: #{game.winner.name}"
+    # clients.each do |client|
+    #   client.puts "Winner: #{game.winner.name}"
+    # end
   end
 
   def stop
@@ -99,7 +102,7 @@ class WarSocketServer
     return unless response
 
     clients.each do |client|
-      client.puts response
+      client.puts "Round|#{game.rounds}   #{response}"
       client.puts('Press Enter:')
     end
     self.responses = []

@@ -7,6 +7,6 @@ game.start
 
 until game.winner
   game.play_round
-  puts game.result
+  puts "Round|#{game.rounds}   #{game.result}"
 end
 puts "Winner: #{game.winner.name}"
