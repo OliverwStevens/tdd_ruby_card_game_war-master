@@ -1,4 +1,5 @@
 require_relative '../lib/card_deck'
+require_relative 'spec_helper'
 
 describe 'CardDeck' do
   it 'Should have 52 cards when created' do
