@@ -1,4 +1,5 @@
 require_relative '../lib/war_game'
+require_relative 'spec_helper'
 
 describe 'WarGame' do
   context 'When it is created' do

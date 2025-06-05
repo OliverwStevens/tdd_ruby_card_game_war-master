@@ -1,6 +1,6 @@
 require_relative '../lib/war_socket_server'
 require_relative '../lib/mock_war_socket_client'
-
+require_relative 'spec_helper'
 describe WarSocketServer do
   let(:client1) { MockWarSocketClient.new(@server.port_number) }
   let(:client2) { MockWarSocketClient.new(@server.port_number) }
