@@ -65,7 +65,7 @@ class WarGame
     if player.nil?
       self.result = "Hot diggity dog! It's a tie between #{card_1.rank} of #{card_1.suit} and a #{card_2.rank} of #{card_2.suit}"
     else
-      self.result = "#{player.name}'s wins the round with a #{card_1.value} of #{card_1.suit} vs a #{card_2.rank} of #{card_2.suit}"
+      self.result = "#{player.name}'s wins the round with a #{card_1.rank} of #{card_1.suit} vs a #{card_2.rank} of #{card_2.suit}"
 
     end
   end

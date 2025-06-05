@@ -47,18 +47,23 @@ class WarSocketServer
     game = setup_game
 
     clients.each do |client|
-      client.puts('Game is starting...')
+      client.puts('Press enter if you are ready to start the game:')
     end
+
     game
   end
 
   def next_round(game)
+    # binding.irb
     listen_for_client_responses
+
     return unless self.responses.count == 2 # rubocop:disable Style/RedundantSelf
 
     game.play_round
 
     output_response(game)
+
+    # listen_for_client_responses
   end
 
   def run_game(game)
@@ -95,6 +100,7 @@ class WarSocketServer
 
     clients.each do |client|
       client.puts response
+      client.puts('Press Enter:')
     end
     self.responses = []
   end

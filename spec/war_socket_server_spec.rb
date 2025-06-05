@@ -46,8 +46,8 @@ describe WarSocketServer do
 
     integrate_client(client2, 'Player 2')
 
-    expect(client1.capture_output).to match(/starting/i)
-    expect(client2.capture_output).to match(/starting/i)
+    expect(client1.capture_output).to match(/ready/i)
+    expect(client2.capture_output).to match(/ready/i)
   end
 
   it 'waits for input from both users before moving onto the next round' do
