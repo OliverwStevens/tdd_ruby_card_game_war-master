@@ -1,4 +1,5 @@
 require_relative '../lib/playing_card'
+require_relative 'spec_helper'
 
 describe 'PlayingCard' do
   it 'Should be a card' do
