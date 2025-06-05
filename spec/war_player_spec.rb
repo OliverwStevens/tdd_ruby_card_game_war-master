@@ -1,4 +1,5 @@
 require_relative '../lib/war_player'
+require_relative 'spec_helper'
 
 describe 'WarPlayer' do
   attr_writer :hand
